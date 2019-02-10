@@ -87,14 +87,19 @@ function makeEmailContainer(obj) {
     // make message class to hold message details
     var mailDetailBox = document.createElement('div');
     mailDetailBox.className = 'mailDetail';
-    mailBox.appendChild(mailDetailBox);
-
+    // insert new message at the top before 1st child unless no msgs [children] yet
+    if (mailBox.childElementCount===0) {
+        mailBox.appendChild(mailDetailBox);
+    } else {
+        mailBox.insertBefore(mailDetailBox,mailBox.firstChild);
+    }
+    
     // append subject to message class
     var subjectBox = document.createElement('div');
     subjectBox.className = 'subject';
     subjectBox.innerHTML = obj.subject;
     mailDetailBox.appendChild(subjectBox);
-
+    
     // append sender to message class
     var senderBox = document.createElement('div');
     senderBox.className = 'sender';
@@ -104,8 +109,10 @@ function makeEmailContainer(obj) {
     // append date to message class
     var dateBox = document.createElement('div');
     dateBox.className = 'date';
-    var fmtDate = obj.date.toISOString().slice(0, 16).replace("T", " ");
-    dateBox.innerHTML = fmtDate;
+    var timezoneOffset = obj.date.getTimezoneOffset()/60;
+    var localDate = new Date(obj.date.setHours(obj.date.getHours() - timezoneOffset));
+    var fmtLocalDate = localDate.toISOString().slice(0, 16).replace("T", " ");
+    dateBox.innerHTML = fmtLocalDate;
     mailDetailBox.appendChild(dateBox);
 
     // append body to message class
@@ -113,8 +120,10 @@ function makeEmailContainer(obj) {
     bodyBox.className = 'body';
     bodyBox.value = obj.body;
     mailDetailBox.appendChild(bodyBox);
+
 }
 
+// load inbox with original emails
 for (var i=0; i<window.geemails.length; i++) {
     var msgObj = window.geemails[i];
     makeEmailContainer(msgObj);
@@ -123,20 +132,7 @@ for (var i=0; i<window.geemails.length; i++) {
 var mailDetailClass = document.getElementsByClassName('mailDetail');
 countBox.innerHTML = "Messages: "+mailDetailClass.length;
 
-// eventually call the getNewMessage function;
-setInterval(incomingMsg, 5000);
-
-function incomingMsg() {
-    var newestMessage = getNewMessage();
-    makeEmailContainer(newestMessage);
-    countBox.innerHTML = "Messages: "+mailDetailClass.length;
-
-}
-
-
-
-
-
+// add event listeners for inital set of emails
 for (var i=0; i<mailDetailClass.length; i++) {
     mailDetailClass[i].addEventListener('click', drillEmail);
 }
@@ -146,4 +142,14 @@ function drillEmail() {
     emailSender.innerHTML = this.querySelectorAll('.sender')[0].innerHTML;
     emailDate.innerHTML = this.querySelectorAll('.date')[0].innerHTML;
     emailBody.innerHTML = this.querySelectorAll('.body')[0].value;
+}
+
+// new email every 10 seconds
+setInterval(incomingMsg, 10000);
+
+function incomingMsg() {
+    var newestMessage = getNewMessage();
+    makeEmailContainer(newestMessage);
+    countBox.innerHTML = "Messages: "+mailDetailClass.length;
+    mailDetailClass[0].addEventListener('click',drillEmail);
 }
