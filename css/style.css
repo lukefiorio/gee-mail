@@ -28,3 +28,44 @@ body {
 .gmTitle {
     margin: 0px;
 }
+
+#inbox {
+    display: flex;
+    margin: 25px;
+}
+
+#summaryPane {
+    display: flex;
+    flex: 1;
+}
+
+#expandEmail {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+}
+
+#mailBox {
+    width: 85%;
+    border: 2px solid black;
+}
+
+.mailDetail {
+    border: 1px dashed lightgray;
+    padding: 10px;
+}
+
+#emailTitle {
+    border-bottom: 2px solid black;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+#emailSubject {
+    font-weight: bold;
+}
+
+#emailDate {
+    color: rgb(120, 120, 120);
+}
