@@ -79,6 +79,48 @@ var emailBody = document.createElement('div');
 emailBody.id = 'emailBody';
 expandEmail.appendChild(emailBody);
 
+
+
+// makes containers for a new email and populates them with object values
+function makeEmailContainer(obj) {
+
+    // make message class to hold message details
+    var mailDetailBox = document.createElement('div');
+    mailDetailBox.className = 'mailDetail';
+    mailBox.appendChild(mailDetailBox);
+
+    // append subject to message class
+    var subjectBox = document.createElement('div');
+    subjectBox.className = 'subject';
+    subjectBox.innerHTML = obj.subject;
+    mailDetailBox.appendChild(subjectBox);
+
+    // append sender to message class
+    var senderBox = document.createElement('div');
+    senderBox.className = 'sender';
+    senderBox.innerHTML = obj.sender;
+    mailDetailBox.appendChild(senderBox);
+
+    // append date to message class
+    var dateBox = document.createElement('div');
+    dateBox.className = 'date';
+    var fmtDate = obj.date.toISOString().slice(0, 16).replace("T", " ");
+    dateBox.innerHTML = fmtDate;
+    mailDetailBox.appendChild(dateBox);
+
+    // append body to message class
+    var bodyBox = document.createElement('div');
+    bodyBox.className = 'body';
+    bodyBox.value = obj.body;
+    mailDetailBox.appendChild(bodyBox);
+}
+
+for (var i=0; i<window.geemails.length; i++) {
+    var msgObj = window.geemails[i];
+    makeEmailContainer(msgObj);
+}
+
+/*
 // loop through to add window.geemails object content thru DOM
 for (var i=0; i<window.geemails.length; i++) {
 
@@ -112,9 +154,24 @@ for (var i=0; i<window.geemails.length; i++) {
     bodyBox.value = window.geemails[i].body;
     mailDetailBox.appendChild(bodyBox);
 }
-
+*/
 
 var mailDetailClass = document.getElementsByClassName('mailDetail');
+countBox.innerHTML = "Messages: "+mailDetailClass.length;
+
+// eventually call the getNewMessage function;
+setInterval(incomingMsg, 5000);
+
+function incomingMsg() {
+    var newestMessage = getNewMessage();
+    makeEmailContainer(newestMessage);
+    countBox.innerHTML = "Messages: "+mailDetailClass.length;
+
+}
+
+
+
+
 
 for (var i=0; i<mailDetailClass.length; i++) {
     mailDetailClass[i].addEventListener('click', drillEmail);

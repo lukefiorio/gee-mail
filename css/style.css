@@ -35,14 +35,18 @@ body {
 }
 
 #summaryPane {
-    display: flex;
     flex: 1;
+    display: block;
 }
 
 #expandEmail {
-    display: flex;
     flex: 2;
     flex-direction: column;
+}
+
+#inboxCount {
+    text-align: right;
+    width: 85%;
 }
 
 #mailBox {
@@ -55,6 +59,18 @@ body {
     padding: 10px;
 }
 
+.subject {
+    font-size: 1.2em;
+}
+
+.sender {
+    font-style: italic;
+}
+
+.date {
+    color: rgb(120, 120, 120);
+}
+
 #emailTitle {
     border-bottom: 2px solid black;
     padding-bottom: 2px;
@@ -63,7 +79,12 @@ body {
 }
 
 #emailSubject {
+    font-size: 1.2em;
     font-weight: bold;
+}
+
+#emailSender {
+    font-style: italic;
 }
 
 #emailDate {
