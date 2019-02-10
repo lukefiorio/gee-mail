@@ -1,0 +1,30 @@
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#header {
+    background-color: cornflowerblue;
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 4em;
+    display: flex;
+}
+
+#gmHeaderImg {
+    height: 80px;
+    width: 80px;
+    margin-left: 10px;
+}
+
+#gmHeaderTitle {
+    color: midnightblue;
+    font-family: 'Happy Monkey', cursive;
+    align-self: flex-end;
+    margin-left: 15px;
+}
+
+.gmTitle {
+    margin: 0px;
+}
