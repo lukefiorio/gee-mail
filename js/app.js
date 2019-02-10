@@ -120,42 +120,6 @@ for (var i=0; i<window.geemails.length; i++) {
     makeEmailContainer(msgObj);
 }
 
-/*
-// loop through to add window.geemails object content thru DOM
-for (var i=0; i<window.geemails.length; i++) {
-
-    // make message class to hold message details
-    var mailDetailBox = document.createElement('div');
-    mailDetailBox.className = 'mailDetail';
-    mailBox.appendChild(mailDetailBox);
-
-    // append subject to message class
-    var subjectBox = document.createElement('div');
-    subjectBox.className = 'subject';
-    subjectBox.innerHTML = window.geemails[i].subject;
-    mailDetailBox.appendChild(subjectBox);
-
-    // append sender to message class
-    var senderBox = document.createElement('div');
-    senderBox.className = 'sender';
-    senderBox.innerHTML = window.geemails[i].sender;
-    mailDetailBox.appendChild(senderBox);
-
-    // append date to message class
-    var dateBox = document.createElement('div');
-    dateBox.className = 'date';
-    var fmtDate = window.geemails[i].date.toISOString().slice(0, 16).replace("T", " ");
-    dateBox.innerHTML = fmtDate;
-    mailDetailBox.appendChild(dateBox);
-
-    // append body to message class
-    var bodyBox = document.createElement('div');
-    bodyBox.className = 'body';
-    bodyBox.value = window.geemails[i].body;
-    mailDetailBox.appendChild(bodyBox);
-}
-*/
-
 var mailDetailClass = document.getElementsByClassName('mailDetail');
 countBox.innerHTML = "Messages: "+mailDetailClass.length;
 
