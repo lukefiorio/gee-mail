@@ -87,6 +87,8 @@ function makeEmailContainer(obj) {
     // make message class to hold message details
     var mailDetailBox = document.createElement('div');
     mailDetailBox.className = 'mailDetail';
+    // assign ID based on distance from end of inbox
+    mailDetailBox.id = 'mailDetailEndMinus'+mailBox.childElementCount;
     // insert new message at the top before 1st child unless no msgs [children] yet
     if (mailBox.childElementCount===0) {
         mailBox.appendChild(mailDetailBox);
@@ -137,11 +139,25 @@ for (var i=0; i<mailDetailClass.length; i++) {
     mailDetailClass[i].addEventListener('click', drillEmail);
 }
 
+//placeholder for use in drillEmail()
+var lastClickedId=null;
+
 function drillEmail() {
-    emailSubject.innerHTML = this.querySelectorAll('.subject')[0].innerHTML;
-    emailSender.innerHTML = this.querySelectorAll('.sender')[0].innerHTML;
-    emailDate.innerHTML = this.querySelectorAll('.date')[0].innerHTML;
-    emailBody.innerHTML = this.querySelectorAll('.body')[0].value;
+
+    if (typeof lastClickedId===null || lastClickedId!==this.id) {
+        emailSubject.innerHTML = this.querySelectorAll('.subject')[0].innerHTML;
+        emailSender.innerHTML = this.querySelectorAll('.sender')[0].innerHTML;
+        emailDate.innerHTML = this.querySelectorAll('.date')[0].innerHTML;
+        emailBody.innerHTML = this.querySelectorAll('.body')[0].value;
+        lastClickedId = this.id;
+    } else {
+        emailSubject.innerHTML = '';
+        emailSender.innerHTML = '';
+        emailDate.innerHTML = '';
+        emailBody.innerHTML ='';
+        lastClickedId = null;
+    }
+
 }
 
 // new email every 10 seconds
